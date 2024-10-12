@@ -1,0 +1,21 @@
+{
+  "name": "virtualizer.js",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "npm run prestart && node dist/index.js",
+    "prestart": "tsc",
+    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.1.3"
+  },
+  "dependencies": {
+    "electron": "^25.2.0",
+    "net": "^1.0.2",
+    "nodemon": "^2.0.22",
+    "plumbing-toolkit": "^1.2.0",
+    "rxjs": "^7.8.1",
+    "sitka": "^1.0.7",
+    "ts-node": "^10.9.1"
+  }
+}
