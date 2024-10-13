@@ -12,6 +12,10 @@ import MulInstNode from "../instructions/arithmetic/MulInstNode";
 import DivInstNode from "../instructions/arithmetic/DivInstNode";
 import EqInstNode from "../instructions/comparisons/EqInstNode";
 import LtInstNode from "../instructions/comparisons/LtInstNode";
+import AndInstNode from "../instructions/arithmetic/AndInstNode";
+import ModInstNode from "../instructions/arithmetic/ModInstNode";
+import OrInstNode from "../instructions/arithmetic/OrInstNode";
+import XorInstNode from "../instructions/arithmetic/XorInstNode";
 
 export default class Interpreter {
     tokenize(input: string): InstNode[] {
@@ -42,6 +46,18 @@ export default class Interpreter {
                     break;
                 case DivInstNode.prettyName:
                     instruction = new DivInstNode();
+                    break;
+                case AndInstNode.prettyName:
+                    instruction = new AndInstNode();
+                    break;
+                case ModInstNode.prettyName:
+                    instruction = new ModInstNode();
+                    break;
+                case OrInstNode.prettyName:
+                    instruction = new OrInstNode();
+                    break;
+                case XorInstNode.prettyName:
+                    instruction = new XorInstNode();
                     break;
                 case PushInstNode.prettyName:
                     if (args.length !== 1) throw new Error(`Invalid number of arguments for ${op}`);

@@ -11,8 +11,8 @@ that can execute a basic set of instructions.
 - **Stack Operations**: Implements a stack to handle arithmetic calculations and function calls.
 - **Instruction Set**: Supports a basic set of instructions including:
     - Memory Operations: Mov, Pop, Push
-    - Comparison Operations: Gt, Lt, Eq
-    - Arithmetic Operations: Add, Sub, Mul, Div
+    - Comparison Operations: Gt (Greater Than), Lt (Less Than), Eq (Equal)
+    - Arithmetic Operations: Add, Sub, Mul, Div, Mod, And, Or, Xor
     - System Operations: Goto, Jump, Print
 
 ## Example Program

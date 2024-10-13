@@ -13,6 +13,10 @@ import LtInstNode from "../instructions/comparisons/LtInstNode";
 import PrintInstNode from "../instructions/system/PrintInstNode";
 import InstNode from "../instructions/InstNode";
 import {logger} from "../global";
+import AndInstNode from "../instructions/arithmetic/AndInstNode";
+import ModInstNode from "../instructions/arithmetic/ModInstNode";
+import OrInstNode from "../instructions/arithmetic/OrInstNode";
+import XorInstNode from "../instructions/arithmetic/XorInstNode";
 
 export default class VirtualMachine {
     private readonly locals: Record<string, number>;
@@ -50,6 +54,24 @@ export default class VirtualMachine {
                 case DivInstNode.opcode:
                     const divisor = Number(this.stack.pop());
                     this.stack.push(Number(this.stack.pop()) / divisor);
+                    break;
+                case AndInstNode.opcode:
+                    const andVal1 = Number(this.stack.pop());
+                    const andVal2 = Number(this.stack.pop());
+                    this.stack.push(andVal1 & andVal2);
+                    break;
+                case ModInstNode.opcode:
+                    const modVal1 = Number(this.stack.pop());
+                    const modVal2 = Number(this.stack.pop());
+                    this.stack.push(modVal2 % modVal1);
+                    break;
+                case OrInstNode.opcode:
+                    this.stack.push(this.stack.pop() | this.stack.pop());
+                    break;
+                case XorInstNode.opcode:
+                    const xorVal1 = this.stack.pop();
+                    const xorVal2 = this.stack.pop();
+                    this.stack.push(xorVal1 ^ xorVal2);
                     break;
                 case PushInstNode.opcode:
                     const pushInstruction = instruction as PushInstNode;
