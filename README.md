@@ -19,6 +19,7 @@ that can execute a basic set of instructions.
 
 The following example program demonstrates the functionality of the virtual machine:
 
+### TypeScript Instructions
 ```typescript
 const program = [
   new MovInstNode("x", 10),
@@ -51,4 +52,35 @@ const program = [
 
 const vm = new VirtualMachine();
 await vm.execute(program);
+```
+
+### Low-Level Instructions
+
+```assembly
+mov x 10
+mov y 5
+
+; If x > y
+push x
+push y
+gt
+jump 6, 11
+; End if
+
+; Start true block
+push 10
+push x
+add
+pop x
+goto 15
+; End true block
+
+; Start false block
+push 5
+push x
+sub
+pop x
+; End false block
+
+print x
 ```

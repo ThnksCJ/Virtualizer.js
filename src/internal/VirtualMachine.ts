@@ -15,8 +15,8 @@ import InstNode from "../instructions/InstNode";
 import {logger} from "../global";
 
 export default class VirtualMachine {
-    private locals: Record<string, number>;
-    private stack: any[];
+    private readonly locals: Record<string, number>;
+    private readonly stack: any[];
     private instructionPointer: number;
 
     constructor() {
@@ -29,33 +29,31 @@ export default class VirtualMachine {
         while (this.instructionPointer < instructions.length) {
             const instruction = instructions[this.instructionPointer];
 
-            logger.virt.debug(`Executing instruction: ${instruction.prettyName}(${instruction.opcode})`);
-
             switch (instruction.opcode) {
                 case MovInstNode.opcode:
                     const movInstruction = instruction as MovInstNode;
                     this.locals[movInstruction.variable] = movInstruction.value;
                     break;
                 case AddInstNode.opcode:
-                    const addVal1 = this.stack.pop();
-                    const addVal2 = this.stack.pop();
+                    const addVal1 = Number(this.stack.pop());
+                    const addVal2 = Number(this.stack.pop());
                     this.stack.push(addVal1 + addVal2);
                     break;
                 case SubInstNode.opcode:
-                    const subVal1 = this.stack.pop();
-                    const subVal2 = this.stack.pop();
+                    const subVal1 = Number(this.stack.pop());
+                    const subVal2 = Number(this.stack.pop());
                     this.stack.push(subVal2 - subVal1);
                     break;
                 case MulInstNode.opcode:
-                    this.stack.push(this.stack.pop() * this.stack.pop());
+                    this.stack.push(Number(this.stack.pop()) * this.stack.pop());
                     break;
                 case DivInstNode.opcode:
-                    const divisor = this.stack.pop();
-                    this.stack.push(this.stack.pop() / divisor);
+                    const divisor = Number(this.stack.pop());
+                    this.stack.push(Number(this.stack.pop()) / divisor);
                     break;
                 case PushInstNode.opcode:
                     const pushInstruction = instruction as PushInstNode;
-                    this.stack.push(pushInstruction.variable ? this.locals[pushInstruction.variable] : pushInstruction.value);
+                    this.stack.push(this.locals[pushInstruction.value] || pushInstruction.value);
                     break;
                 case PopInstNode.opcode:
                     const popInstruction = instruction as PopInstNode;
