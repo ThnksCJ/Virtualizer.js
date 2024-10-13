@@ -1,3 +1,13 @@
+/**
+ * Represents an instruction node.
+
+ * @constructor
+ * @param opcode - The opcode of the instruction.
+ * @param prettyName - The pretty name of the instruction.
+ *
+ * @see Interpreter#tokenize
+ * @see VirtualMachine#execute
+ */
 class InstNode {
     private readonly _opcode: number;
     private readonly _prettyName: string;

@@ -1,26 +1,52 @@
-import InstNode from "../instructions/InstNode";
-import MovInstNode from "../instructions/memory/MovInstNode";
-import PushInstNode from "../instructions/memory/PushInstNode";
-import GtInstNode from "../instructions/comparisons/GtInstNode";
-import JumpInstNode from "../instructions/system/JumpInstNode";
 import AddInstNode from "../instructions/arithmetic/AddInstNode";
-import GotoInstNode from "../instructions/system/GotoInstNode";
-import PrintInstNode from "../instructions/system/PrintInstNode";
-import PopInstNode from "../instructions/memory/PopInstNode";
 import SubInstNode from "../instructions/arithmetic/SubInstNode";
-import MulInstNode from "../instructions/arithmetic/MulInstNode";
 import DivInstNode from "../instructions/arithmetic/DivInstNode";
-import EqInstNode from "../instructions/comparisons/EqInstNode";
-import LtInstNode from "../instructions/comparisons/LtInstNode";
+import MulInstNode from "../instructions/arithmetic/MulInstNode";
 import AndInstNode from "../instructions/arithmetic/AndInstNode";
 import ModInstNode from "../instructions/arithmetic/ModInstNode";
 import OrInstNode from "../instructions/arithmetic/OrInstNode";
 import XorInstNode from "../instructions/arithmetic/XorInstNode";
 
+import MovInstNode from "../instructions/memory/MovInstNode";
+import PushInstNode from "../instructions/memory/PushInstNode";
+import PopInstNode from "../instructions/memory/PopInstNode";
+
+import GotoInstNode from "../instructions/system/GotoInstNode";
+import JumpInstNode from "../instructions/system/JumpInstNode";
+import PrintInstNode from "../instructions/system/PrintInstNode";
+
+import EqInstNode from "../instructions/comparisons/EqInstNode";
+import GtInstNode from "../instructions/comparisons/GtInstNode";
+import LtInstNode from "../instructions/comparisons/LtInstNode";
+
+import InstNode from "../instructions/InstNode";
+
+/**
+ * Interpreter class that preprocesses, tokenizes, and interprets the input into an array of instructions
+ * that can be executed by the VM.
+ */
 export default class Interpreter {
+    /**
+     * Removes comments and empty lines from the input.
+     * @param input The raw input string.
+     * @returns Cleaned input without comments and empty lines.
+     */
+    preprocess(input: string): string {
+        return input
+            .split('\n')
+            .map(line => line.split(';')[0].trim())
+            .filter(line => line.length > 0)
+            .join('\n');
+    }
+
+    /**
+     * Tokenizes the input string into an array of instructions.
+     * @param input The raw input string.
+     * @returns An array of {@link InstNode} instructions.
+     */
     tokenize(input: string): InstNode[] {
         const program: InstNode[] = [];
-        const lines = input.split('\n');
+        const lines = this.preprocess(input).split('\n');
 
         for (const line of lines) {
             const trimmedLine = line.trim();
@@ -103,6 +129,11 @@ export default class Interpreter {
         return program;
     }
 
+    /**
+     * Reads the file at the given path and returns its contents.
+     * @param path The path to the file.
+     * @returns The contents of the file.
+     */
     async readFile(path: string): Promise<string> {
         const fs = require('fs');
         return new Promise<string>((resolve, reject) => {
